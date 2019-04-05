@@ -1,0 +1,427 @@
+<html>
+<head>
+<title>Coursework &copy;&reg;&trade;</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="jquery.jCombo.js"></script>
+<style type="text/css">
+div.container {
+    width: 100%;
+    border: 1px solid gray;
+}
+
+table {
+	margin: auto;
+}
+
+header, footer {
+    padding: 10px;
+    color: black;
+    background-color: coral;
+    clear: left;
+    text-align: center;
+}
+
+article {
+    padding: 10px;
+    background-color: lightgrey;
+	text-align: center;
+    overflow: hidden;
+}
+
+label {
+	font-weight: bold;
+}
+
+.hide { position:absolute; top:-1px; left:-1px; width:1px; height:1px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<header>
+   <h1>Database vs XML</h1>
+</header>
+
+<article>
+<script type="text/javascript"> // Start of Script \\
+$(document).ready(function(){
+// hide the dropdown menu \\
+$("#tablelist").hide();
+$("#headlist").hide();
+$("#searchbox").hide();
+$("#searchbtn").hide();
+$("#SelHead").hide();
+$("#SearchVal").hide();
+$("#addbtn").hide();
+$("#cancbtn").hide();
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////////Function////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function updateTable(){
+	setTimeout(function(){ //set the timer
+		if ($tablename.indexOf('xml') !== -1) {   // if the selected value is an xml doc type \\
+			
+			$.getJSON("getXMLfile.php?filename="+$tablename, {},   // Get the json data from this php file \\
+			function(json){
+				myList = json;
+				if(isEmpty(myList)) { //calls the function
+				alert("ERROR: No file was found");//when no results are found
+				} else {
+				$('#dvTable table').empty();
+				buildHtmlTable();  // recieve the json and use it in this function to build the search results into a table \\
+				}
+			});
+			}
+			else    // if a database table is selected \\
+			{
+			$.getJSON("getDatabase.php?tablename="+$tablename, {}, // Get the json data from this php file \\
+			function(json){
+				myList = json;
+				if(isEmpty(myList)) { //calls the function
+				alert("ERROR: No database was found"); //when no results are found
+				} else {
+				$('#dvTable table').empty();
+				buildHtmlTable();  // recieve the json and use it in this function to build the search results into a table \\
+				}
+			});
+			} 
+	}, 1000); //timer is 1 second
+}
+
+function isEmpty(myList) {
+    for(var key in myList) {         // This function checks if the object being sent to the page is empty or not\\
+        if(myList.hasOwnProperty(key))
+            return false;
+    }
+    return true;
+}
+
+var myList;
+// Builds the HTML Table out of myList json data
+ function buildHtmlTable() {
+
+     var columns = addAllColumnHeaders(myList);
+ 
+     for (var i = 0 ; i < myList.length ; i++) {
+         var row$ = $('<tr/>');
+         for (var colIndex = 0 ; colIndex < columns.length ; colIndex++) {
+             var cellValue = myList[i][columns[colIndex]];
+ 
+             if (cellValue == null) { cellValue = ""; }
+ 
+             row$.append($('<td/>').html(cellValue));
+         }
+         $("#DataTable").append(row$);
+     }
+ }
+ 
+ 
+ // Adds a header row to the table and returns the set of columns.
+ function addAllColumnHeaders(myList)
+ {
+     var columnSet = [];
+     var headerTr$ = $('<tr/>');
+ 
+     for (var i = 0 ; i < myList.length ; i++) {
+         var rowHash = myList[i];
+         for (var key in rowHash) {
+             if ($.inArray(key, columnSet) == -1){
+                 columnSet.push(key);
+                 headerTr$.append($('<th/>').html(key));
+             }
+         }
+     }
+     $("#DataTable").append(headerTr$);
+ 
+     return columnSet;
+ }
+ 
+ var myForm
+ 
+ function buildForm(myForm){
+	$("#addDB").append("<input type='hidden' name='tablename' value='"+$tablename+"'>"); //add a hidden field conating the table name
+	for (var i = 0 ; i < myForm.length ; i++) {
+			$("#addDB").append("<label name='"+myForm[i]+"' >"+'  '+myForm[i]+':'+"</label>"); //add a label
+			$("#addDB").append("<input type='text' name='"+myForm[i]+"'>");                    //and add an input for each colum in the table
+			$("#addDB").append("<br>");
+	}
+	$("#addDB").append("<br>");
+	$("#addDB").append("<button type ='submit' id='inbtn'>Insert Row</button>"); //add a submit button to the form
+	
+	$("#inbtn").click(function() //submit button is clicked
+	{
+	
+	$("#addbtn").show(); //show the add button
+	$("#cancbtn").hide();
+	$("#addDB").hide();  //and hide all the form and buttons
+	$("#inbtn").hide();
+	
+	document.getElementById("dblist").disabled = false;
+	document.getElementById("tablelist").disabled = false; // enable all the selection boxes \\
+	document.getElementById("headlist").disabled = false;
+
+	updateTable(); //call the update table function to display the added record
+	});
+	
+ }
+/////////////////////////////////////////////////////////////////////////
+/////////////////////////////Function////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////
+
+$("#dblist").change(function() // When the dropdown menu is changed \\
+{
+	if($("#dblist").val() == 0) // When "Please Select" is selected hide the menu \\
+        {
+		  $("#tablelist").hide();
+		  $("#headlist").hide();
+		  $("#searchbox").hide();
+		  $("#searchbtn").hide();
+		  $("#SelHead").hide();
+		  $("#SearchVal").hide();
+		  $("#addbtn").hide();
+		  $('#dvTable table').empty();
+        }
+	else if($("#dblist").val() == 1) // when "XML" is selected display the XML dropdown menu \\ 
+		{
+		  $("#tablelist").jCombo("getXMLlist.php", {} );
+		  $("#tablelist").show();   
+		}
+	else // when "Database" is selected display the table dropdown menu \\
+		{	
+		  $("#tablelist").jCombo("getTablesList.php", {} );
+		  $("#tablelist").show();
+		}
+		
+});
+$("#tablelist").change(function() // When the dropdown menu is changed \\
+{
+	if($("#tablelist").val() == 0) // When "Please Select" is selected hide the menu \\
+		{
+			$("#headlist").hide();
+			$("#searchbox").hide();
+			$("#searchbtn").hide();
+			$("#SelHead").hide();
+			$("#SearchVal").hide();
+			$("#addbtn").hide();
+			$('#dvTable table').empty();
+		}
+	else    // When anything else is selected \\
+		{
+			$("#SelHead").show();
+			$("#headlist").show();
+			$("#addbtn").show();
+			$tablename = $("#tablelist>option:selected").text(); // put the text value of the option selected into a variable \\
+			
+			if ($tablename.indexOf('xml') !== -1) {   // if the selected value is an xml doc type \\
+			$("#headlist").jCombo("getXMLhead.php?filename="+$tablename, {} ); // fill the headlist dropdown box with data \\
+			
+			$.getJSON("getXMLfile.php?filename="+$tablename, {},   // Get the json data from this php file \\
+			function(json){
+				myList = json;
+				if(isEmpty(myList)) { //calls the function
+				alert("ERROR: No file was found");//when no results are found
+				} else {
+				$('#dvTable table').empty();
+				buildHtmlTable();  // recieve the json and use it in this function to build the search results into a table \\
+				}
+			});
+			}
+			else    // if a database table is selected \\
+			{
+			$("#headlist").jCombo("getTheadList.php?tablename="+$tablename, {} ); // fill the headlist dropdown box with data \\
+			
+			$.getJSON("getDatabase.php?tablename="+$tablename, {}, // Get the json data from this php file \\
+			function(json){
+				myList = json;
+				if(isEmpty(myList)) { //calls the function
+				alert("ERROR: No database was found"); //when no results are found
+				} else {
+				$('#dvTable table').empty();
+				buildHtmlTable();  // recieve the json and use it in this function to build the search results into a table \\
+				}
+			});
+			}
+		}
+});
+$("#headlist").change(function() // When the dropdown menu is changed \\
+{
+	if($("#headlist").val() == 0) // When "Please Select" is selected hide the textbox and button\\
+		{
+			$("#searchbox").hide();
+			$("#searchbtn").hide();
+			$("#SearchVal").hide();
+			$("#addbtn").show();
+			
+			document.getElementById("searchbox").value = ""; //clears the searchbox
+			
+			if ($tablename.indexOf('xml') !== -1) {   // if the selected value is an xml doc type \\
+			
+			$.getJSON("getXMLfile.php?filename="+$tablename, {},   // Get the json data from this php file \\
+			function(json){
+				myList = json;
+				if(isEmpty(myList)) { //calls the function
+				alert("ERROR: No file was found");//when no results are found
+				} else {
+				$('#dvTable table').empty();
+				buildHtmlTable();  // recieve the json and use it in this function to build the search results into a table \\
+				}
+			});
+			}
+			else    // if a database table is selected \\
+			{
+			$.getJSON("getDatabase.php?tablename="+$tablename, {}, // Get the json data from this php file \\
+			function(json){
+				myList = json;
+				if(isEmpty(myList)) { //calls the function
+				alert("ERROR: No database was found"); //when no results are found
+				} else {
+				$('#dvTable table').empty();
+				buildHtmlTable();  // recieve the json and use it in this function to build the search results into a table \\
+				}
+			});
+			}
+		}
+	else       // When anything else is selected \\
+		{
+			$("#searchbox").show();
+			$("#searchbtn").show();
+			$("#SearchVal").show();
+			$("#addbtn").hide();
+			$("#searchbox").focus();
+			$headname = $("#headlist>option:selected").text(); // put the text value of the option selected into a variable \\
+		}
+});
+$("#searchbtn").click(function()
+{
+	$searchval = $("#searchbox").val(); // put the value of the textbox into a variable \\
+if ($searchval == "")
+{
+	alert("ERROR: please enter a value in the text box before searching");
+}
+else
+{
+if ($tablename.indexOf('xml') !== -1) // if the selected value is an xml doc type \\
+{
+	$.getJSON("getXMLsearch.php", // get the json from the php file \\
+	{
+		filename: $tablename,
+		headname: $headname,   // send these variables to the php file \\
+		searchval: $searchval
+	},
+			function(json){
+				myList = json;
+				if(isEmpty(myList)) { //calls the function
+				alert("ERROR: No result found please try again"); //when no results are found
+				} else {
+				$('#dvTable table').empty();
+				buildHtmlTable();  // recieve the json and use it in this function to build the search results into a table \\
+				}
+			});
+}
+else   // if a database table is selected \\
+{
+	$.getJSON("getSearch.php", // get the json from the php file \\
+	{
+		tablename: $tablename,
+		headname: $headname,   // send these variables to the php file \\
+		searchval: $searchval
+	},
+			function(json){
+				myList = json;
+				if(isEmpty(myList)) { //calls the function
+				alert("ERROR: No result found please try again"); //when no results are found
+				} else {
+				$('#dvTable table').empty();
+				buildHtmlTable();  // recieve the json and use it in this function to build the search results into a table \\
+				}
+			});
+}
+}
+});
+$("#addbtn").click(function()
+{
+	$("#addbtn").hide();
+	$("#cancbtn").show();
+	$("#addDB").show();
+	
+	document.getElementById("dblist").disabled = true;
+	document.getElementById("tablelist").disabled = true; // disable all the selection boxes while adding rows \\
+	document.getElementById("headlist").disabled = true;
+	
+	if ($tablename.indexOf('xml') !== -1) { // if the selected value is an xml doc type \\
+		$.getJSON("getXMLadd.php?filename="+$tablename, {},   // Get the json data from this php file \\
+			function(json){
+				myForm = json;
+				$('#dvTable form').empty(); //empty the form
+				document.addNewRow.action = "addXMLfile.php"; //set the form action to be the add xml php file
+				buildForm(myForm); //call this function to build the form
+			});
+	}
+	else { // When anything else is selected \\
+		$.getJSON("getdbadd.php?filename="+$tablename, {},   // Get the json data from this php file \\
+			function(json){
+				myForm = json;
+				$('#dvTable form').empty(); //empty the form
+				document.addNewRow.action = "addDB.php"; //set the form action to be the add db php file
+				buildForm(myForm); //call this function to build the form
+			});
+	}
+});
+$("#cancbtn").click(function()
+{
+	$("#addbtn").show();
+	$("#cancbtn").hide();
+	$('#dvTable form').empty();
+	
+	document.getElementById("dblist").disabled = false;
+	document.getElementById("tablelist").disabled = false; // enable all the selection boxes \\
+	document.getElementById("headlist").disabled = false;
+});
+
+$('#searchbox').keypress(function(e){
+      if(e.keyCode==13)  // if enter is pressed \\
+      $('#searchbtn').click();  
+    });
+});
+</script> // End of Script \\
+
+	// create the drop down menu that has options of "XML" or "Database" \\
+	<select name="dblist" id="dblist">
+		<option value="0">-- Please Select --</option>
+		<option value="1">XML</option>
+		<option value="2">Database</option>
+	</select>
+	
+	// create the drop down menu that appears when "Database" is selected \\
+	<select name="tablelist" id="tablelist"></select>
+	<br>
+	<label id="SelHead">Select Header: </label>
+	<select name="headist" id="headlist"></select>
+	<label id="SearchVal"> Enter Search Value: </label>
+	<input type ="text" name="search" id="searchbox">
+	<button type ="button" id="searchbtn">Search</button>
+	<br>
+	// create a div called dvTable \\
+	<div id="dvTable" class="form">
+		// create the table that will be filled and appear when a data source has been selected \\
+		<table id="DataTable" border="1">
+		</table>
+		<br>
+		<iframe name="hiddenFrame" class="hide"></iframe>
+		<button type ="button" id="addbtn">Add Row</button>
+		// create the form that will be filled and appear when the add row button is pressed \\
+		<form id="addDB" name="addNewRow" method="post" target="hiddenFrame">
+		</form>
+		<button type ="button" id="cancbtn">Cancel</button>
+	</div>
+</article>
+
+<footer>IS3S664 &copy;</footer>
+
+</div>
+
+</body>
+</html>

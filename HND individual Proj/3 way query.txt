@@ -1,0 +1,5 @@
+Select t.TeamName, t.TeamNo, mt.MatchNo, mt.Result, mt.HomeOrAway, m.MatchDate, m.Score
+From team t, matchteam mt, `match` m
+Where t.TeamNo = mt.TeamNo
+and m.MatchNo = mt.MatchNo;
+

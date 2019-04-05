@@ -1,0 +1,104 @@
+@charset "utf-8";
+body,td,th {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 100%;
+	color: #FFF;
+	float: none;
+	text-align: left;
+}
+body {
+	background-color: #0049DD;
+	background-image: url(Images/emirates-stadium-emireyts.jpg);
+	background-position: 50% 0%;
+	-webkit-box-shadow: 0px 0px;
+	box-shadow: 0px 0px;
+	background-attachment: fixed;
+	background-repeat: no-repeat;
+}
+body, html {
+	margin: 0px;
+}
+a {
+	font-size: 100%;
+	color: #FFF;
+}
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+	color: #FFF;
+}
+a:hover {
+	text-decoration: none;
+	color: #FFF;
+}
+a:active {
+	text-decoration: none;
+	color: #FFF;
+}
+h1,h2,h3,h4,h5,h6 {
+	font-weight: bold;
+}
+h1 {
+	color: #FFF;
+}
+h2 {
+	color: #FFF;
+}
+#Container {
+	width: 960px;
+	border: 3px none #00F;
+	background-color: #003399;
+	height: auto;
+	margin-bottom: 0px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0px;
+}
+#Header {
+	background-color: #F00;
+	height: 123px;
+	width: 930px;
+	border: 2.5px solid #039;
+	background-image: url(Images/banner.fw.png);
+	padding-left: 25px;
+	padding-top: 3px;
+}
+#Navbar {
+	background-color: #F00;
+	height: 580px;
+	width: 175px;
+	float: left;
+	background-image: url(Images/Navbar.fw.png);
+	border: 2.5px solid #039;
+	padding-top: 20px;
+	padding-left: 25px;
+}
+#Content {
+	height: auto;
+	width: 745px;
+	float: right;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+}
+#Footer {
+	background-color: #F00;
+	height: 54px;
+	width: 530px;
+	clear: both;
+	border: 2.5px solid #039;
+	background-image: url(Images/footer.fw.png);
+	background-repeat: no-repeat;
+	padding-left: 425px;
+	padding-top: 3px;
+}
+
+.floatright{
+	float:right;
+}
+
+.redfont{
+	color:#F00
+}

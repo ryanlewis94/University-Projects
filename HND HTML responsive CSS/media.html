@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Media</title>
+<link href="Styles/mainstylesheet.css" rel="stylesheet" type="text/css">
+<!--[if lte IE 8]>
+<script type="text/javascript" src="javascript/html5.js"></script>
+<![endif]-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js"
+type="text/javascript"></script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="http://malsup.github.com/jquery.cycle2.js"></script>
+<script src="javascript/caption2.js"></script>
+<script src="javascript/swipe.js"></script>
+
+<script type="text/javascript">
+function load() {
+var feed ="http://open.live.bbc.co.uk/weather/feeds/en/2654755/3dayforecast.rss";
+new GFdynamicFeedControl(feed, "feedControl");
+}
+google.load("feeds", "1");
+google.setOnLoadCallback(load);
+</script>
+
+<style type="text/css">
+@import url("http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
+</style>
+</head>
+
+<body>
+<div id="container">
+  <header id="logo">
+	<nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="league.php">League</a></li>
+        <li><a href="games.php">Games</a></li>
+        <li><a href="media.html">Media</a></li>
+        <li><a href="about.html">About</a></li>
+      </ul>
+    </nav>
+   </header>
+  <div id="maincontent">
+    <article id="welcome">
+    	<div class="cycle-slideshow"
+        data-cycle-swipe=true
+    	data-cycle-swipe-fx=scrollHorz
+        data-cycle-fx=fadeout
+ 		data-cycle-timeout="3000"
+    	data-cycle-pause-on-hover="true"
+        data-cycle-caption-plugin=caption2
+    	data-cycle-overlay-fx-out="slideUp"
+    	data-cycle-overlay-fx-in="slideDown"
+    	>
+        
+        <div class="cycle-overlay"></div>
+        <div class="cycle-pager"></div>
+        
+        	<img src="images/slide/aberkenfigvblackmill.jpg"
+            data-cycle-title="Aberkenfig V Blackmill" 
+        	data-cycle-desc="29/11/15">
+    		<img src="images/slide/under10.jpg"
+            data-cycle-title="Under 10's Friendly" 
+       	 	data-cycle-desc="22/11/15">
+    		<img src="images/slide/action.jpg"
+            data-cycle-title="Jamie in action for Pyle" 
+        	data-cycle-desc="6/12/15">
+    		<img src="images/slide/pylejoe.jpg"
+            data-cycle-title="Joe on fine form - earns himself another clean sheet" 
+        	data-cycle-desc="Tondu 0 - 3 Pyle">
+        </div>
+    </article>
+    
+<section id="news">
+  <h1>Video</h1>
+    <video width="400" height="300" controls>
+    <source src="images/Fifa.mp4" type="video/mp4">
+	Your browser does not support the video tag.
+	</video>
+</section>
+
+<section id="pictures"> 
+  <h1> Pictures</h1>
+  <br>
+  <hr>
+  <b>Newton V Bridgend</b> - 29/11/15
+  <figure><img src="images/soccer.jpg" width="315" height="245" alt="Newton V Bridgend"></figure>
+  <hr>
+  <b>Starting them off young</b>
+  <figure><img src="images/young.jpg" width="315" height="245" alt="Starting Young"></figure>
+  <hr>
+  <b>Bridgend Womens League</b>
+  <figure><img src="images/women.jpg" width="315" height="355" alt="Womens Game"></figure>
+  <hr>
+  <b>Coity V Bettws</b> - 29/11/15
+  <figure><img src="images/ingame.jpg" width="315" height="190" alt="Coity V Bettws"></figure>
+  <hr>
+</section>
+</div>
+  
+  <footer>
+  <div id="date">
+<script>
+var d = new Date();
+document.getElementById("date").innerHTML = d.toDateString();
+</script>
+</div>
+    <p><b>Bridgend Football League</b>, Bridgend, Wales, UK, CF317UJ</p>
+        <div id="socialMedia"><a href="http://www.facebook.com"><img src="images/facebook.png" width="24" height="25" alt="facebook"></a><a href="http://www.twitter.com"><img src="images/twitter.png" width="24" height="25" alt="twitter"></a></div>
+    <p>01656 420420</p>
+
+  </footer>
+</div>
+</body>
+</html>

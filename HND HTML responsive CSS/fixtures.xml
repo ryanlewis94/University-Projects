@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<FIXTURES>
+    <FIXTURE>
+        <DATE>06/12/15</DATE>
+		<TIME>12:00</TIME>
+        <MATCHUP>Brackla V Coity</MATCHUP>
+    </FIXTURE>
+	<FIXTURE>
+        <DATE>06/12/15</DATE>
+		<TIME>12:00</TIME>
+        <MATCHUP>Llangeinor V Newton</MATCHUP>
+    </FIXTURE>
+	<FIXTURE>
+        <DATE>06/12/15</DATE>
+		<TIME>15:00</TIME>
+        <MATCHUP>Bettws V Tondu</MATCHUP>
+    </FIXTURE>
+	<FIXTURE>
+        <DATE>06/12/15</DATE>
+		<TIME>15:00</TIME>
+        <MATCHUP>Bridgend V Blackmill</MATCHUP>
+    </FIXTURE>
+	<FIXTURE>
+        <DATE>06/12/15</DATE>
+		<TIME>17:30</TIME>
+        <MATCHUP>Pyle V Aberkenfig</MATCHUP>
+    </FIXTURE>
+</FIXTURES>

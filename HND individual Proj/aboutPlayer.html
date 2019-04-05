@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>About</title>
+<link href="Styles/mainstylesheet.css" rel="stylesheet" type="text/css">
+<!--[if lte IE 8]>
+<script type="text/javascript" src="javascript/html5.js"></script>
+<![endif]-->
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script src="http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.js"
+type="text/javascript"></script>
+
+<style type="text/css">
+@import url("http://www.google.com/uds/solutions/dynamicfeed/gfdynamicfeedcontrol.css");
+
+</style>
+<script type="text/javascript">
+function load() {
+var feed ="http://open.live.bbc.co.uk/weather/feeds/en/2654755/3dayforecast.rss";
+new GFdynamicFeedControl(feed, "feedControl");
+
+}
+google.load("feeds", "1");
+google.setOnLoadCallback(load);
+</script>
+</head>
+
+<body>
+<div id="container">
+  <header id="logo">
+	<nav>
+      <ul>
+        <li><a href="indexPlayer.php">Home</a></li>
+        <li><a href="matchesPlayer.php">Matches</a></li>
+        <li><a href="teamPlayer.php">Team</a></li>
+        <li><a href="mediaPlayer.html">Media</a></li>
+        <li><a href="aboutPlayer.html">About</a></li>
+        <li><a href="main_login.php">Logout</a></li>
+      </ul>
+    </nav>
+   </header>
+  <div id="maincontent">
+    <article id="welcome">
+		
+    </article>
+<section id="news">
+  <h1>Contact Info</h1>
+  <br>
+  <article>
+  	<p><b>Phone Number:</b> 01656 420420</p>
+    <p><b>Email Address:</b> bridgendfootball@hotmail.co.uk</p>
+    <br>
+    <p><b>Address:</b><br></p>
+    <p>Bridgend Football League<br>
+    Bridgend<br>
+    Wales<br>
+    UK<br>
+    CF31 7UJ</p>
+  </article>
+</section>
+<section id="pictures"> 
+  <h1>Where to find us</h1>
+  <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d16707.824329227104!2d-3.5792107115511156!3d51.50160292208667!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x486e12c8c98bcee5%3A0xa6481a2b6370cd7b!2sBridgend!5e0!3m2!1sen!2suk!4v1449325108430" width="314" height="300" frameborder="1px" style="border:line" allowfullscreen></iframe>
+</section>
+  </div>
+  <footer>
+  <div id="date">
+<script>
+var d = new Date();
+document.getElementById("date").innerHTML = d.toDateString();
+</script>
+</div>
+    <p><b>Bridgend Football League</b>, Bridgend, Wales, UK, CF317UJ</p>
+        <div id="socialMedia"><a href="http://www.facebook.com"><img src="images/facebook.png" width="24" height="25" alt=		"facebook"></a><a href="http://www.twitter.com"><img src="images/twitter.png" width="24" height="25" alt="twitter"></a></div>
+    <p>01656 420420</p>
+
+  </footer>
+</div>
+</body>
+</html>
